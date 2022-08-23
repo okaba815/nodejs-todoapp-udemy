@@ -14,7 +14,9 @@ app.use('/api/v1/tasks', taskRoute);
 //データベース接続
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_URL);
+    //herokuにあげると、gitignoreしたmongoDBへの接続URLがわからないので、DB接続ができない
+    //これはパスワードを直書きしたくない為です。なので、heroku上では環境変数で渡すことにする。ローカルでは.envを見ればいい
+    await connectDB(process.env.MONGO_HEROKU_URL || process.env.MONGO_URL);
     //ローカル環境では5000番が使えるが、
     //herokuでは5000番が使えないので、以下のようにherokuで使えるポートを指定する「process.env.PORT」
     app.listen(process.env.PORT || PORT, console.log('サーバが起動しました'));
