@@ -15,7 +15,9 @@ app.use('/api/v1/tasks', taskRoute);
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URL);
-    app.listen(PORT, console.log('サーバが起動しました'));
+    //ローカル環境では5000番が使えるが、
+    //herokuでは5000番が使えないので、以下のようにherokuで使えるポートを指定する「process.env.PORT」
+    app.listen(process.env.PORT || PORT, console.log('サーバが起動しました'));
   } catch (err) {
     console.log(err);
   }
